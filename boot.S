@@ -25,6 +25,11 @@ stack_top:
 .global _start
 .type _start, @function
 _start:
+	movl $stack_top, %esp 
+	pushl %ebx
+
+	call kernel_main
+
 	cli
 	hlt
 

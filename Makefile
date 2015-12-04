@@ -1,15 +1,20 @@
 CC:=i686-elf-gcc
 AS:=i686-elf-as
 LDFLAGS:=-ffreestanding -O2 -nostdlib
+CFLAGS:=-std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LIBS:=-lgcc
+INCLUDE:=include
 
 all: treehouse.bin
 
-treehouse.bin: link.ld boot.o main.o
-	$(CC) -T link.ld -o treehouse.bin $(LDFLAGS) boot.o main.o $(LIBS)
+treehouse.bin: link.ld boot.o display.o main.o 
+	$(CC) -T link.ld -o treehouse.bin $(LDFLAGS) boot.o main.o display.o $(LIBS)
+
+display.o: display.c
+	$(CC) -c display.c -o display.o $(CFLAGS) -I $(INCLUDE)
 
 main.o: main.c
-	$(CC) -c main.c -o main.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	$(CC) -c main.c -o main.o $(CFLAGS) -I $(INCLUDE)
 
 boot.o: boot.S
 	$(AS) -c boot.S -o boot.o

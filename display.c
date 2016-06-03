@@ -22,14 +22,3 @@ void clear_console(void)
 		}
 	}
 }
-
-void printk_early(int color, const char *string)
-{
-    volatile uint8_t *video = (volatile uint8_t *)VGABASEADDR;
-
-    while( *string != 0 )
-    {
-        *video++ = *string++;
-        *video++ = color;
-    }
-}

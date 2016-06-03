@@ -26,6 +26,4 @@ void print_char(const uint8_t c, const uint16_t x, const uint16_t y, enum vga_co
 
 void clear_console(void);
 
-void printk_early(int colour, const char *string);
-
 #define VGABASEADDR 0xb8000

@@ -9,6 +9,9 @@
  *
  */
 
+#ifndef __TREEHOUSE_TYPES_H
+#define __TREEHOUSE_TYPES_H
+
 #define NULL    ((void*) 0)
 
 typedef unsigned long long uint64_t;
@@ -24,3 +27,5 @@ typedef unsigned char uint8_t;
 typedef signed char int8_t;
  
 typedef uint32_t size_t;
+
+#endif /* __TREEHOUSE_TYPES_H */

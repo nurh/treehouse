@@ -16,11 +16,11 @@ display.o: display.c
 main.o: main.c
 	$(CC) -c main.c -o main.o $(CFLAGS) -I $(INCLUDE)
 
-printk.o: printk.c
-	$(CC) -c printk.c -o printk.o $(CFLAGS) -I $(INCLUDE)
+printk.o: util/printk.c
+	$(CC) -c util/printk.c -o printk.o $(CFLAGS) -I $(INCLUDE)
 
-string.o: string.c
-	$(CC) -c string.c -o string.o $(CFLAGS) -I $(INCLUDE)
+string.o: util/string.c
+	$(CC) -c util/string.c -o string.o $(CFLAGS) -I $(INCLUDE)
 
 boot.o: boot.S
 	$(AS) -c boot.S -o boot.o

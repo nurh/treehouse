@@ -10,8 +10,8 @@ all: treehouse.bin
 treehouse.bin: link.ld boot.o display.o main.o string.o printk.o
 	$(CC) -T link.ld -o treehouse.bin $(LDFLAGS) boot.o main.o display.o string.o printk.o $(LIBS)
 
-display.o: display.c
-	$(CC) -c display.c -o display.o $(CFLAGS) -I $(INCLUDE)
+display.o: drivers/display.c
+	$(CC) -c drivers/display.c -o display.o $(CFLAGS) -I $(INCLUDE)
 
 main.o: main.c
 	$(CC) -c main.c -o main.o $(CFLAGS) -I $(INCLUDE)
@@ -22,8 +22,8 @@ printk.o: util/printk.c
 string.o: util/string.c
 	$(CC) -c util/string.c -o string.o $(CFLAGS) -I $(INCLUDE)
 
-boot.o: boot.S
-	$(AS) -c boot.S -o boot.o
+boot.o: boot/boot.S
+	$(AS) -c boot/boot.S -o boot.o
 
 clean:
 	rm -f *.o *.bin

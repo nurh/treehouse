@@ -9,4 +9,5 @@ struct gdt_entry_struct {
 
 typedef struct gdt_entry_struct gdt_entry_t;
 
-void load_gdt(gdt_entry_t * entry, const uint32_t base, const uint32_t limit, const uint8_t access, const uint8_t flags);
+void build_gdt(gdt_entry_t * entry, const uint32_t base, const uint32_t limit, const uint8_t access, const uint8_t flags);
+extern void set_gdt(void * gdt, uint16_t size);

@@ -21,7 +21,7 @@
  *	Bit 24-41: Base address 24-31
  */
 
-void load_gdt(gdt_entry_t * entry, const uint32_t base, const uint32_t limit, const uint8_t access, const uint8_t flags)
+void build_gdt(gdt_entry_t * entry, const uint32_t base, const uint32_t limit, const uint8_t access, const uint8_t flags)
 {
 	entry->seg_limit_low = limit & 0xFFFF;
 	entry->base_addr_low = base & 0xFFFF;

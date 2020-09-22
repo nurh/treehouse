@@ -1,5 +1,11 @@
 .section .data
 
+# The following allocates space for the pointer we will supply the lgdt command with
+#
+#	|LIMIT|----BASE----|  
+#
+# LIMIT goes into the halfword, BASE goes into the word.
+
 gdtr:
 .hword	0x0
 .word	0x0

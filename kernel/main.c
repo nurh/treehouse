@@ -6,14 +6,9 @@
 int kernel_main() 
 {
 	op_init_console();
-	int i;
+	op_set_fg_color(COLOR_CYAN);
 
-	panic("Test panic");
-
-	for(i=0;i<100;i++) {
-		printk("Hello treehouse. Build %s.", "Blah");
-	}
-
+	printk("Hello world! This is the treehouse!");
 
 	return 0xDEADBEEF;
 }

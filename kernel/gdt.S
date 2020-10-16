@@ -6,6 +6,8 @@
 #
 # LIMIT goes into the halfword, BASE goes into the word.
 
+.global set_gdt
+
 gdtr:
 .hword	0x0
 .word	0x0

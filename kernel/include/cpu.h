@@ -11,6 +11,17 @@ typedef struct gdt_entry_struct gdt_entry_t;
 
 void build_gdt_entry(gdt_entry_t * entry, const uint32_t base, const uint32_t limit, const uint8_t access, const uint8_t flags);
 extern void set_gdt(void * gdt, uint16_t size);
+extern void reload_segments(void);
+
+static inline void disable_interrupts(void)
+{
+	__asm__("cli");
+}
+
+static inline void enable_interrupts(void)
+{
+	__asm__("sti");
+}
 
 #define G_4K_SEGMENTS 0x08
 #define DB_32BIT_DEFAULT 0x04

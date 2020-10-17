@@ -7,6 +7,7 @@
 # LIMIT goes into the halfword, BASE goes into the word.
 
 .global set_gdt
+.global reload_segments
 
 gdtr:
 .hword	0x0
@@ -20,4 +21,16 @@ set_gdt:
 	movw 8(%esp), %ax
 	movw %ax, gdtr
 	lgdt gdtr
+	ret
+
+reload_segments:
+	ljmp $0x8, $reload_cs
+
+reload_cs:
+	mov $0x10, %ax
+	mov %ax, %ds
+	mov %ax, %es
+	mov %ax, %fs
+	mov %ax, %gs
+	mov %ax, %ss
 	ret

@@ -19,7 +19,11 @@ void init_gdt(void)
 
 int kernel_main() 
 {
+	disable_interrupts();
+
 	init_gdt();
+
+	reload_segments();
 
 	op_init_console();
 	op_set_fg_color(COLOR_CYAN);

@@ -39,7 +39,7 @@ void init_gdt(void)
 	build_gdt_entry(&gdt[1], 0x0, 0xFFFFFFFF, (P_SEGMENT_PRESENT | DPL_RING_ZERO | S_CODE_OR_DATA_SEGMENT | TYPE_CODE_EXECUTE_READ), (G_4K_SEGMENTS | DB_32BIT_DEFAULT));
 	build_gdt_entry(&gdt[2], 0x0, 0xFFFFFFFF, (P_SEGMENT_PRESENT | DPL_RING_ZERO | S_CODE_OR_DATA_SEGMENT | TYPE_DATA_READ_WRITE), (G_4K_SEGMENTS | DB_32BIT_DEFAULT));
 
-	set_gdt((void *)gdt, sizeof(gdt));
+	set_gdt((void *)gdt, sizeof(gdt)-1);
 }
 
 void init_idt(void)

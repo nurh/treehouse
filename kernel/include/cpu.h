@@ -7,11 +7,26 @@ struct gdt_entry_struct {
 	uint8_t base_addr_high;
 }__attribute__((packed));
 
+struct idt_entry_struct {
+	uint16_t offset_lo;
+	uint16_t selector;
+	uint8_t zero;
+	uint8_t type;
+	uint16_t offset_hi;
+}__attribute__((packed));
+
 typedef struct gdt_entry_struct gdt_entry_t;
+typedef struct idt_entry_struct idt_entry_t;
 
 void build_gdt_entry(gdt_entry_t * entry, const uint32_t base, const uint32_t limit, const uint8_t access, const uint8_t flags);
+void init_gdt(void);
+void init_idt(void);
 extern void set_gdt(void * gdt, uint16_t size);
 extern void reload_segments(void);
+extern void set_idt(void * idt, uint16_t size);
+
+extern gdt_entry_t gdt[3];
+extern idt_entry_t idt[256];
 
 static inline void disable_interrupts(void)
 {

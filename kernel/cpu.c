@@ -1,5 +1,6 @@
 #include <types.h>
 #include <cpu.h>
+#include <string.h>
 
 /*
  * Intel's GDT has some pretty weird splits.
@@ -29,4 +30,20 @@ void build_gdt_entry(gdt_entry_t * entry, const uint32_t base, const uint32_t li
 	entry->access = access;
 	entry->flags_limit_high = (flags << 4) | ((limit >> 16) & 0x000F);
 	entry->base_addr_high = (base >> 24) & 0x00FF;
+}
+
+void init_gdt(void)
+{
+
+	build_gdt_entry(&gdt[0], 0x0, 0x0, 0x0, 0x0);
+	build_gdt_entry(&gdt[1], 0x0, 0xFFFFFFFF, (P_SEGMENT_PRESENT | DPL_RING_ZERO | S_CODE_OR_DATA_SEGMENT | TYPE_CODE_EXECUTE_READ), (G_4K_SEGMENTS | DB_32BIT_DEFAULT));
+	build_gdt_entry(&gdt[2], 0x0, 0xFFFFFFFF, (P_SEGMENT_PRESENT | DPL_RING_ZERO | S_CODE_OR_DATA_SEGMENT | TYPE_DATA_READ_WRITE), (G_4K_SEGMENTS | DB_32BIT_DEFAULT));
+
+	set_gdt((void *)gdt, sizeof(gdt));
+}
+
+void init_idt(void)
+{
+	memset((void *)idt, 0, sizeof(idt));
+	set_idt((void *)idt, sizeof(idt)-1);
 }

@@ -18,7 +18,7 @@ int kernel_main()
 	op_init_console();
 	op_set_fg_color(COLOR_CYAN);
 
-	printk("Hello world! This is the treehouse!");
+	printk("Hello world!\nThis is the treehouse!");
 
 	return 0xDEADBEEF;
 }

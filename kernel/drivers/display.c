@@ -35,11 +35,26 @@ uint16_t op_increment_cursor_pos(void)
 	return op_con.offset;
 }
 
+void op_newline(void) 
+{
+	int i, current_offset;
+
+	current_offset = op_con.offset;
+
+	for(i = 0; i<(TEXTMODE_LINE_SIZE - (current_offset%TEXTMODE_LINE_SIZE)); i++) {
+		op_increment_cursor_pos();
+	}
+}
+
 void op_putc(const uint8_t c)
 {
-	op_increment_cursor_pos();
-	op_con.buf[op_con.offset] = c;
-	op_write_buf_to_screen();
+	if(c=='\n') {
+		op_newline();
+	} else {
+		op_increment_cursor_pos();
+		op_con.buf[op_con.offset] = c;
+		op_write_buf_to_screen();
+	}
 }
 
 void op_move_buffer_up_one_line(void)

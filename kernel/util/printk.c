@@ -93,7 +93,11 @@ void printk(const char * fmt, ...)
 	va_start(args, fmt);
 
 	for(i = 0; fmt[i]; fmt++) {
-		if(fmt[i]!='%' && ignore_next_char==0) {
+		if(fmt[i]=='\\' && fmt[i+1]=='n') {
+			put_char('\n');
+			fmt++;
+			continue;
+		} else if(fmt[i]!='%' && ignore_next_char==0) {
 			put_char(fmt[i]);
 		} else if (ignore_next_char==1) {
 			ignore_next_char = 0;

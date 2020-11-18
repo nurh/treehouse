@@ -1,10 +1,10 @@
-.global isr_wrapper
+.global isr_wrapper_default
 
 .align 4
 
-isr_wrapper:
-	pushad
+isr_wrapper_default:
+	pushal
 	cld
-	call interrupt_handler
-	popad
+	call default_interrupt_handler
+	popal
 	iret

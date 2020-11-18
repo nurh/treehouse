@@ -9,6 +9,8 @@
 .global set_gdt
 .global reload_segments
 
+.align 4
+
 gdtr:
 .hword	0x0
 .word	0x0

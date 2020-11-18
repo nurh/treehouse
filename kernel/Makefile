@@ -7,8 +7,11 @@ INCLUDE:=include
 
 all: treehouse.bin
 
-treehouse.bin: link.ld boot.o display.o main.o string.o printk.o cpu.o panic.o gdt.o idt.o
-	$(CC) -T link.ld -o treehouse.bin $(LDFLAGS) boot.o main.o display.o string.o printk.o cpu.o panic.o gdt.o idt.o $(LIBS)
+treehouse.bin: link.ld boot.o display.o main.o string.o printk.o cpu.o panic.o gdt.o idt.o isr_wrapper.o interrupt_handlers.o
+	$(CC) -T link.ld -o treehouse.bin $(LDFLAGS) boot.o main.o display.o string.o printk.o cpu.o panic.o gdt.o idt.o isr_wrapper.o interrupt_handlers.o $(LIBS)
+
+interrupt_handlers.o: interrupt_handlers.c
+	$(CC) -c interrupt_handlers.c -o interrupt_handlers.o  $(CFLAGS) -I$(INCLUDE)
 
 panic.o: panic.c
 	$(CC) -c panic.c -o panic.o  $(CFLAGS) -I$(INCLUDE)
@@ -33,6 +36,9 @@ gdt.o: gdt.S
 
 idt.o: idt.S
 	$(AS) -c idt.S -o idt.o
+
+isr_wrapper.o: isr_wrapper.S
+	$(AS) -c isr_wrapper.S -o isr_wrapper.o
 
 boot.o: boot/boot.S
 	$(AS) -c boot/boot.S -o boot.o

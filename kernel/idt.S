@@ -2,6 +2,8 @@
 
 .global set_idt
 
+.align 4
+
 idt_ptr:
 .hword	0x0
 .word	0x0

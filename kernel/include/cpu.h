@@ -15,15 +15,44 @@ struct idt_entry_struct {
 	uint16_t offset_hi;
 }__attribute__((packed));
 
+struct registers_struct {
+	uint32_t ds;
+	uint32_t es;
+	uint32_t fs;
+	uint32_t gs;
+
+	uint32_t edi;
+	uint32_t esi;
+	uint32_t ebp;
+	uint32_t esp;
+	uint32_t ebx;
+	uint32_t edx;
+	uint32_t ecx;
+	uint32_t eax;
+
+	uint32_t int_no;
+	uint32_t err_code;
+
+	uint32_t eip;
+	uint32_t cs;
+	uint32_t eflags;
+	uint32_t sp;
+	uint32_t ss;
+}__attribute__((packed));
+
 typedef struct gdt_entry_struct gdt_entry_t;
 typedef struct idt_entry_struct idt_entry_t;
+typedef struct registers_struct registers_t;
 
 void build_gdt_entry(gdt_entry_t * entry, const uint32_t base, const uint32_t limit, const uint8_t access, const uint8_t flags);
+void build_idt_entry(idt_entry_t * entry, const uint32_t offset, const uint16_t selector, const uint8_t type);
+
 void init_gdt(void);
 void init_idt(void);
 extern void set_gdt(void * gdt, uint16_t size);
 extern void reload_segments(void);
 extern void set_idt(void * idt, uint16_t size);
+extern void isr_wrapper_default(void);
 
 extern gdt_entry_t gdt[3];
 extern idt_entry_t idt[256];

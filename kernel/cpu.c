@@ -32,6 +32,15 @@ void build_gdt_entry(gdt_entry_t * entry, const uint32_t base, const uint32_t li
 	entry->base_addr_high = (base >> 24) & 0x00FF;
 }
 
+void build_idt_entry(idt_entry_t * entry, const uint32_t offset, const uint16_t selector, const uint8_t type)
+{
+	entry->offset_lo = offset & 0xFFFF;
+	entry->selector = selector;
+	entry->zero = 0;
+	entry->type = type;
+	entry->offset_hi = (offset >> 16) & 0xFFFF;
+}
+
 void init_gdt(void)
 {
 
@@ -45,5 +54,7 @@ void init_gdt(void)
 void init_idt(void)
 {
 	memset((void *)idt, 0, sizeof(idt));
+	build_idt_entry(&idt[32], (uint32_t) isr_wrapper_default, 0x08, 0x8E); 
+	build_idt_entry(&idt[33], (uint32_t) isr_wrapper_default, 0x08, 0x8E); 
 	set_idt((void *)idt, sizeof(idt)-1);
 }

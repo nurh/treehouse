@@ -26,5 +26,9 @@ int kernel_main()
 
 	asm volatile ("int $0x20");
 
+	asm volatile ("int $0x20");
+
+	asm volatile ("int $0x20");
+
 	return 0xDEADBEEF;
 }

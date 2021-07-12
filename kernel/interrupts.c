@@ -4,6 +4,8 @@
 #include <interrupts.h>
 #include <io.h>
 
+extern registers_t global_regs;
+
 void pic_init(void)
 {
 	uint8_t pic1mask, pic2mask;
@@ -39,7 +41,6 @@ void pic_init(void)
 void default_interrupt_handler(registers_t regs)
 {
 	if(regs.int_no == 0x20) {
-		printk("The number is right.\n");
+		printk("Interrupt detected");
 	}
-	printk("Interrupt detected\n");
 }

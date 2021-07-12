@@ -3,10 +3,12 @@
 .align 4
 
 isr_wrapper_default:
+.func isr_wrapper_default
 /* 
 	We need to use EBX as a scratch register so we'll save its contents first,
 	then we'll stick our original stack pointer in EBX.
 */
+
 
 	push %ebx
 	movl %esp, %ebx
@@ -18,11 +20,10 @@ isr_wrapper_default:
 	and %esp, 0xfffffff0
 
 /*
-       This will push 4 bytes of zeros as padding. The struct should be 76 bytes,
-       which is not a multiple of 16 so it won't line up right. Adding 4 more bytes
-       makes it an even 80 (16*5).
+       The struct should be 76 bytes, which is not a multiple of 16 but we need to
+       leave 4 bytes for the return address push, which will make it an even 80.
 */
-	pushl $0x0
+
 	push $0x0
 	push $0x20
 
@@ -32,7 +33,11 @@ isr_wrapper_default:
 	push %es
 	push %ds
 	cld
+
+/* TODO: may need to load real segment registers here because we don't trust userspace. */
+
 	call default_interrupt_handler
+
 	pop %ds
 	pop %es
 	pop %fs
@@ -43,3 +48,5 @@ isr_wrapper_default:
 	pop %ebx
 
 	iret
+.endfunc 
+.size isr_wrapper_default, . - isr_wrapper_default

@@ -55,6 +55,5 @@ void init_idt(void)
 {
 	memset((void *)idt, 0, sizeof(idt));
 	build_idt_entry(&idt[32], (uint32_t) isr_wrapper_default, 0x08, 0x8E); 
-	build_idt_entry(&idt[33], (uint32_t) isr_wrapper_default, 0x08, 0x8E); 
 	set_idt((void *)idt, sizeof(idt)-1);
 }

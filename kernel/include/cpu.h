@@ -53,6 +53,7 @@ extern void set_gdt(void * gdt, uint16_t size);
 extern void reload_segments(void);
 extern void set_idt(void * idt, uint16_t size);
 extern void isr_wrapper_default(void);
+extern void interrupt_0x20_wrapper(void);
 
 extern gdt_entry_t gdt[3];
 extern idt_entry_t idt[256];

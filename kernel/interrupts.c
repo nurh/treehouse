@@ -2,6 +2,7 @@
 #include <cpu.h>
 #include <panic.h>
 #include <interrupts.h>
+#include <scheduler.h>
 #include <io.h>
 
 void pic_init(void)
@@ -38,7 +39,9 @@ void pic_init(void)
 
 void default_interrupt_handler(registers_t regs)
 {
+	printk("Interrupt detected!\n");
+
 	if(regs.int_no == 0x20) {
-		printk("Schedule!");
+		schedule();
 	}
 }

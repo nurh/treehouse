@@ -1,15 +1,18 @@
 CC:=i686-elf-gcc
 AS:=i686-elf-as
 LDFLAGS:=-ffreestanding -O2 -nostdlib
-CFLAGS:=-std=gnu99 -ffreestanding -O0 -Wall -Wextra -g
+CFLAGS:=-std=gnu99 -ffreestanding -O0 -Wall -Wextra
 LIBS:=-lgcc
 INCLUDE:=include
 
 all: treehouse.bin
 
-treehouse.bin: link.ld boot.o display.o main.o string.o printk.o cpu.o panic.o gdt.o idt.o isr_wrapper.o interrupts.o timer.o
-	$(CC) -T link.ld -o treehouse.bin $(LDFLAGS) boot.o main.o display.o string.o printk.o cpu.o panic.o gdt.o idt.o isr_wrapper.o interrupts.o timer.o $(LIBS)
+treehouse.bin: link.ld boot.o display.o main.o string.o printk.o cpu.o panic.o gdt.o idt.o isr_wrapper.o interrupts.o timer.o scheduler.o
+	$(CC) -T link.ld -o treehouse.bin $(LDFLAGS) boot.o main.o display.o string.o printk.o cpu.o panic.o gdt.o idt.o isr_wrapper.o interrupts.o timer.o scheduler.o $(LIBS)
 
+scheduler.o: scheduler.c
+	$(CC) -c scheduler.c -o scheduler.o $(CFLAGS) -I$(INCLUDE)
+	
 timer.o: timer.c
 	$(CC) -c timer.c -o timer.o $(CFLAGS) -I$(INCLUDE)
 

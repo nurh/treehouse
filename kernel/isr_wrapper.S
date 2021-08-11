@@ -53,3 +53,38 @@ isr_wrapper_default:
 	iret
 .endfunc 
 .size isr_wrapper_default, . - isr_wrapper_default
+
+interrupt_0x20_wrapper:
+.func interrupt_0x20_wrapper
+	push %ebx
+	movl %esp, %ebx
+	and %esp, 0xfffffff0
+
+	push $0x0
+	push $0x20
+
+	pushal
+	push %gs
+	push %fs
+	push %es
+	push %ds
+	cld
+
+	call default_interrupt_handler
+
+	mov $0x20, %al
+	outb %al, $0x20
+
+	pop %ds
+	pop %es
+	pop %fs
+	pop %gs
+	popal
+	
+	movl %ebx, %esp
+	pop %ebx
+
+	iret
+.endfunc 
+.size interrupt_0x20_wrapper, . - interrupt_0x20_wrapper
+
